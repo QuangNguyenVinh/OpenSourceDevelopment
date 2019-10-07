@@ -14,11 +14,11 @@
 		}
 		form
 		{
-        	background-color: #9176F6;        
-            margin: 0px;
-            width: 35%;
-            left: 35%;
-            position: absolute;
+			background-color: #9176F6;        
+			margin: 0px;
+			width: 35%;
+			left: 35%;
+			position: absolute;
         }
 	</style>
 </head>

@@ -19,7 +19,7 @@
 			width: 35%;
 			left: 35%;
 			position: absolute;
-        }
+		}
 	</style>
 </head>
 <body>

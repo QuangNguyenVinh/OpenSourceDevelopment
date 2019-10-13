@@ -4,19 +4,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Matrix</title>
 	<style>
-		body
-		{
-			background-color: #9176F6;
-		}
 		h2
 		{
 			color: red;
 		}
 		form
 		{
-			background-color: #9176F6;        
+			background-color: #05aeb3;        
 			margin: 0px;
-			width: 35%;
 			left: 35%;
 			position: absolute;
 		}
@@ -44,7 +39,7 @@
 			{
 				echo "<tr>";
 				for($j = 0; $j < count($matrix[$i]); $j++)
-					echo "<td style='border: 3px solid #29F4DF; text-align: center;'>".$matrix[$i][$j]."</td>";
+					echo "<td style='border: 3px solid lightblue; text-align: center;'>".$matrix[$i][$j]."</td>";
 				echo "</tr>";
 			}
 			echo "</table>";
@@ -94,7 +89,7 @@
 		<table border="0">
 			<tr>
 				<td>Nhập số hàng: </td>
-				<td><input type="text" name="rowMatrix" value="<?php echo $m ?>"> (*) </td>
+				<td><input type="text" name="rowMatrix" value="<?php echo $m ?>"></td>
 			</tr>
 			<tr>
 				<td></td>
@@ -102,7 +97,7 @@
 			</tr>
 			<tr>
 				<td>Nhập số cột: </td>
-				<td><input type="text" name="colMatrix" value="<?php echo $n ?>"> (*) </td>
+				<td><input type="text" name="colMatrix" value="<?php echo $n ?>"></td>
 			</tr>
 			<tr>
 				<td></td>
@@ -113,8 +108,10 @@
 				<td><input type="submit" name="CreateMatrix" value="Tạo ma trận"></td>
 			</tr>
 			<tr>
-				<td>Ma trận: </td>
-				<td><?php printMatrix($arr) ?></td>
+				<td align="center" colspan="2">Ma trận</td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2"><?php printMatrix($arr) ?></td>
 			</tr>
 		</table>
 	</form>

@@ -4,15 +4,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Fraction</title>
 	<style>
-		form {
-            background-color: #ffffcc;
-            text-align: center;
-            margin-top: 5%;
-            left: 35%;
-            min-width: 30%;
-            position: absolute;
-            border: 2px solid gray;
-        }
+		form 
+		{
+			background-color: #ffffcc;
+			text-align: center;
+			margin-top: 5%;
+			left: 35%;
+			min-width: 30%;
+			position: absolute;
+			border: 2px solid gray;
+		}
 	</style>
 </head>
 <body>

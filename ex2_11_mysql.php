@@ -9,19 +9,25 @@
 <body>
     <?php 
         require('connect.php');
+        $ma_sua = "";
+        $ten_sua = "";
+        $trong_luong = "";
+        $don_gia = "";
+        $tp_dinh_duong = "";
+        $loi_ich = "";
     ?>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
     <table align="center">
         <tr>
             <th colspan="2">THÊM SỮA MỚI</th>
         </tr>
         <tr>
             <td>Mã sữa: </td>
-            <td><input type="text" name="ma_sua_txt" required></td>
+            <td><input type="text" name="ma_sua_txt" value="<?php echo $ma_sua ?>" required></td>
         </tr>
         <tr>
             <td>Tên sữa: </td>
-            <td><input type="text" name="ten_sua_txt" required></td>
+            <td><input type="text" name="ten_sua_txt" value="<?php echo $ten_sua ?>" required></td>
         </tr>
         <tr>
             <td>Hãng sữa</td>
@@ -76,23 +82,23 @@
         </tr>
         <tr>
             <td>Trọng lượng: </td>
-            <td><input type="number" name="trong_luong_txt" min="1" required> gr hoặc ml</td>
+            <td><input type="number" name="trong_luong_txt" min="1" value="<?php echo $trong_luong ?>" required> gr hoặc ml</td>
         </tr>
         <tr>
             <td>Đơn giá: </td>
-            <td><input type="number" name="don_gia_txt" min="1" required> (VNĐ)</td>
+            <td><input type="number" name="don_gia_txt" min="1" value="<?php echo $don_gia ?>" required> (VNĐ)</td>
         </tr>
         <tr>
             <td>Thành phần dinh dưỡng: </td>
-            <td><textarea rows="3" cols="50" name="tp_dinh_duong_txt" required></textarea></td>
+            <td><textarea rows="3" cols="50" name="tp_dinh_duong_txt" value="<?php echo $tp_dinh_duong?>" required></textarea></td>
         </tr>
         <tr>
             <td>Lợi ích: </td>
-            <td><textarea rows="3" cols="50" name="loi_ich_txt" required></textarea></td>
+            <td><textarea rows="3" cols="50" name="loi_ich_txt" value="<?php echo $loi_ich ?>" required></textarea></td>
         </tr>
         <tr>
             <td>Hình ảnh: </td>
-            <td><input type="text" name="hinh_txt" required></td>
+            <td><input type="file" name="hinh" required></td>
         </tr>
         <tr>
             <td colspan="2" align="center">
@@ -111,48 +117,74 @@
             $don_gia = $_REQUEST["don_gia_txt"];
             $tp_dinh_duong = $_REQUEST["tp_dinh_duong_txt"];
             $loi_ich = $_REQUEST["loi_ich_txt"];
-            $hinh = $_REQUEST["hinh_txt"];
 
-            $sql_insert = "INSERT INTO sua (ma_sua, Ten_sua, Ma_hang_sua, Ma_loai_sua, Trong_luong, Don_gia, TP_Dinh_Duong, Loi_ich, Hinh)
-                            VALUES ('".$ma_sua."', '".$ten_sua."', '".$hang_sua."', '".$loai_sua."', '".$trong_luong."', '".$don_gia."', '".$tp_dinh_duong."', '".$loi_ich."', '".$hinh."')";
-            if (mysqli_query($conn, $sql_insert)) 
+            //Xử lý file ảnh
+            $errors= array();
+            $file_name = $_FILES['hinh']['name'];
+            $file_size = $_FILES['hinh']['size'];
+            $file_tmp = $_FILES['hinh']['tmp_name'];
+            $file_type= $_FILES['hinh']['type'];
+            $tmp = explode('.', $_FILES['hinh']['name']);
+            $file_ext= strtolower(end($tmp));
+            $expensions= array("jpeg","jpg","png");
+            if(in_array($file_ext, $expensions)=== false)
             {
-                echo '<h5 align="center"> Kết quả sau khi thêm mới thành công</h5>';
-                echo '<p align="center">Thêm sữa thành công</p>';
-                $sql_search = "SELECT Ten_sua, Ten_hang_sua, Trong_luong, Don_gia, TP_Dinh_Duong, Loi_ich, Hinh
+                $errors[]="Tệp có phần mở rộng phải là định djang JPG, JPEG hoặc PNG.";
+            }
+            if($file_size > 2097152)
+            {
+                $errors[]='Kích thước file phải bé hơn hoặc bằng 2MB';
+            }
+            if(empty($errors)==true)
+            {
+                move_uploaded_file($file_tmp,"Hinh_sua/".$file_name);
+                $hinh =  $_FILES['hinh']['name'];
+
+                $sql_insert = "INSERT INTO sua (ma_sua, Ten_sua, Ma_hang_sua, Ma_loai_sua, Trong_luong, Don_gia, TP_Dinh_Duong, Loi_ich, Hinh)
+                            VALUES ('".$ma_sua."', '".$ten_sua."', '".$hang_sua."', '".$loai_sua."', '".$trong_luong."', '".$don_gia."', '".$tp_dinh_duong."', '".$loi_ich."', '".$hinh."')";
+                if (mysqli_query($conn, $sql_insert)) 
+                {
+                    echo '<h5 align="center"> Kết quả sau khi thêm mới thành công</h5>';
+                    echo '<p align="center">Thêm sữa thành công</p>';
+                    $sql_search = "SELECT Ten_sua, Ten_hang_sua, Trong_luong, Don_gia, TP_Dinh_Duong, Loi_ich, Hinh
                             FROM sua JOIN hang_sua ON sua.Ma_hang_sua = hang_sua.Ma_hang_sua
                             JOIN loai_sua ON sua.Ma_loai_sua = loai_sua.Ma_loai_sua
                             WHERE sua.Ma_sua = '".$ma_sua."'";
-                $res_search = mysqli_query($conn, $sql_search);
-                if(mysqli_num_rows($res_search) > 0)
-                {
-                    echo '<table border="1" width="70%" align="center">';
-                    
-                    while($row = mysqli_fetch_object($res_search))
+                    $res_search = mysqli_query($conn, $sql_search);
+                    if(mysqli_num_rows($res_search) > 0)
                     {
-                        echo '<tr>';
-                            echo '<td colspan="2" align="center" style="background-color: #2d9498;">'.$row->Ten_sua.'-'.$row->Ten_hang_sua.'</td>';
-                        echo '</tr>';
+                        echo '<table border="1" width="70%" align="center">';
+                        while($row = mysqli_fetch_object($res_search))
+                        {
+                            echo '<tr>';
+                                echo '<td colspan="2" align="center" style="background-color: #2d9498;">'.$row->Ten_sua.'-'.$row->Ten_hang_sua.'</td>';
+                            echo '</tr>';
 
-                        echo '<tr>';
-                            echo '<td align="center" width="200px"> <img src="Hinh_sua/'.$row->Hinh.'" width="100px" height="100px"></td>';
+                            echo '<tr>';
+                                echo '<td align="center" width="200px"> <img src="Hinh_sua/'.$row->Hinh.'" width="100px" height="100px"></td>';
                         
-                            echo '<td>';                  
-                                echo '<b> Thành phần dinh dưỡng: </b></br>'.$row->TP_Dinh_Duong.'</br>';
-                                echo '<b>Lợi ích:</b> </br>'.$row->Loi_ich.'</br>';
-                                echo '<b>Trọng lượng: </b>'.$row->Trong_luong.' gr - <b>Đơn giá:</b> '.$row->Don_gia.' VNĐ';
-                            echo '</td>';
+                                echo '<td>';                  
+                                    echo '<b> Thành phần dinh dưỡng: </b></br>'.$row->TP_Dinh_Duong.'</br>';
+                                    echo '<b>Lợi ích:</b> </br>'.$row->Loi_ich.'</br>';
+                                    echo '<b>Trọng lượng: </b>'.$row->Trong_luong.' gr - <b>Đơn giá:</b> '.$row->Don_gia.' VNĐ';
+                                echo '</td>';
 
-                        echo '</tr>';                        
+                            echo '</tr>';                        
+                        }
+                     echo '</table>';
                     }
-                    echo '</table>';
+                } else 
+                {
+                    echo '<h3 align="center">Trùng mã sản phẩm</h3>';
                 }
-            } else 
+                mysqli_close($conn);
+            }
+            else
             {
-                echo '<h3 align="center">Trùng mã sản phẩm</h3>';
+                print_r($errors);
             }
             
-            mysqli_close($conn);
+            
             
         }
     ?>

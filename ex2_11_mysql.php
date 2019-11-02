@@ -15,6 +15,17 @@
         $don_gia = "";
         $tp_dinh_duong = "";
         $loi_ich = "";
+        if(isset($_POST["addBtn"]))
+        {
+            $ma_sua = $_POST["ma_sua_txt"];
+            $ten_sua = $_POST["ten_sua_txt"];
+            $hang_sua = $_POST["hang_sua"];
+            $loai_sua = $_POST["loai_sua"];
+            $trong_luong = $_POST["trong_luong_txt"];
+            $don_gia = $_POST["don_gia_txt"];
+            $tp_dinh_duong = $_POST["tp_dinh_duong_txt"];
+            $loi_ich = $_POST["loi_ich_txt"];
+        }
     ?>
     <form action="" method="POST" enctype="multipart/form-data">
     <table align="center">
@@ -23,11 +34,11 @@
         </tr>
         <tr>
             <td>Mã sữa: </td>
-            <td><input type="text" name="ma_sua_txt" value="<?php echo $ma_sua ?>" required></td>
+            <td><input type="text" name="ma_sua_txt" value="<?php echo $ma_sua; ?>" required></td>
         </tr>
         <tr>
             <td>Tên sữa: </td>
-            <td><input type="text" name="ten_sua_txt" value="<?php echo $ten_sua ?>" required></td>
+            <td><input type="text" name="ten_sua_txt" value="<?php echo $ten_sua; ?>" required></td>
         </tr>
         <tr>
             <td>Hãng sữa</td>
@@ -82,19 +93,19 @@
         </tr>
         <tr>
             <td>Trọng lượng: </td>
-            <td><input type="number" name="trong_luong_txt" min="1" value="<?php echo $trong_luong ?>" required> gr hoặc ml</td>
+            <td><input type="number" name="trong_luong_txt" min="1" value="<?php echo $trong_luong; ?>" required> gr hoặc ml</td>
         </tr>
         <tr>
             <td>Đơn giá: </td>
-            <td><input type="number" name="don_gia_txt" min="1" value="<?php echo $don_gia ?>" required> (VNĐ)</td>
+            <td><input type="number" name="don_gia_txt" min="1" value="<?php echo $don_gia; ?>" required> (VNĐ)</td>
         </tr>
         <tr>
             <td>Thành phần dinh dưỡng: </td>
-            <td><textarea rows="3" cols="50" name="tp_dinh_duong_txt" value="<?php echo $tp_dinh_duong?>" required></textarea></td>
+            <td><textarea rows="3" cols="50" name="tp_dinh_duong_txt" required><?php echo $tp_dinh_duong; ?></textarea></td>
         </tr>
         <tr>
             <td>Lợi ích: </td>
-            <td><textarea rows="3" cols="50" name="loi_ich_txt" value="<?php echo $loi_ich ?>" required></textarea></td>
+            <td><textarea rows="3" cols="50" name="loi_ich_txt" required><?php echo $loi_ich; ?></textarea></td>
         </tr>
         <tr>
             <td>Hình ảnh: </td>
@@ -109,14 +120,14 @@
     <?php
         if(isset($_POST["addBtn"]))
         {
-            $ma_sua = $_REQUEST["ma_sua_txt"];
-            $ten_sua = $_REQUEST["ten_sua_txt"];
-            $hang_sua = $_REQUEST["hang_sua"];
-            $loai_sua = $_REQUEST["loai_sua"];
-            $trong_luong = $_REQUEST["trong_luong_txt"];
-            $don_gia = $_REQUEST["don_gia_txt"];
-            $tp_dinh_duong = $_REQUEST["tp_dinh_duong_txt"];
-            $loi_ich = $_REQUEST["loi_ich_txt"];
+            // $ma_sua = $_POST["ma_sua_txt"];
+            // $ten_sua = $_POST["ten_sua_txt"];
+            // $hang_sua = $_POST["hang_sua"];
+            // $loai_sua = $_POST["loai_sua"];
+            // $trong_luong = $_POST["trong_luong_txt"];
+            // $don_gia = $_POST["don_gia_txt"];
+            // $tp_dinh_duong = $_POST["tp_dinh_duong_txt"];
+            // $loi_ich = $_POST["loi_ich_txt"];
 
             //Xử lý file ảnh
             $errors= array();

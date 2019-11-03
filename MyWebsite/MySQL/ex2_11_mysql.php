@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Thêm sữa</title>
+    <title>2.11 Thêm mới</title>
+    <style>
+        table
+        {
+            background-color: #ccd9cf;
+
+        }
+        th
+        {
+            background-color: #2d9498;
+            text-align: center;
+        }
+        #addBtn
+        {
+                background-color: #f9f895;
+        }
+    </style>
 </head>
 <body>
     <?php 
@@ -109,11 +125,14 @@
         </tr>
         <tr>
             <td>Hình ảnh: </td>
-            <td><input type="file" name="hinh" required></td>
+            
+            <td>
+                <input type="file" name="hinh" value="Chọn tệp"  accept="image/png, image/jpeg, image/jpg" required>
+            </td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <input type="submit" value="Thêm mới" name="addBtn">
+                <input type="submit" value="Thêm mới" name="addBtn" id="addBtn">
             </td>
         </tr>
     </table>

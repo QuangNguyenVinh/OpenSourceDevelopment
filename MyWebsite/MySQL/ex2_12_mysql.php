@@ -1,8 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 	 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>QLBS</title>
+	<title>2.12 Xóa - Sửa</title>
+	<style>
+		table
+        {
+            background-color: #ccd9cf;
+
+        }
+        #headerTable
+        {
+            background-color: #2d9498;
+            text-align: center;
+        }
+	</style>
 </head>
 <body>
 	<?php
@@ -48,8 +60,10 @@
     	}
 	?>
     <form action="" method="GET">
-    <h3 align="center">THÔNG TIN KHÁCH HÀNG</h3>
 	<table border="1" align="center">
+			<tr id="headerTable">
+				<td colspan="8"><h3 align="center">THÔNG TIN KHÁCH HÀNG</h3></td>
+			</tr>
 			<tr>
 				<th>Mã khách hàng</th>
 				<th>Tên khách hàng</th>

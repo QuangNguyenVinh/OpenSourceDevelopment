@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 	 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>QLBS Pager</title>
+	<title>2.4 Lưới phân trang</title>
     <style>
         a
         {
@@ -13,7 +13,7 @@
 <body>
 	<?php
 		require('connect.php');
-        $rowsPerPage = 2; //Số mẩu tin trên mỗi trang.
+        $rowsPerPage = 10; //Số mẩu tin trên mỗi trang.
         if(!isset($_GET['page'])) //Vị trí  của mẩu tin đầu tiên trên mỗi trang.
         {
             $_GET['page'] = 1;
@@ -21,7 +21,7 @@
         $offset = ($_GET['page'] - 1) * $rowsPerPage; //Lấy rowsPerPage mẩu tin, bắt đầu từ vị trí offset.
 
 
-		$sql = 'SELECT Ten_sua, Ten_hang_sua, Trong_luong, Don_gia, TP_Dinh_Duong, Loi_ich, Hinh
+		$sql = 'SELECT Ten_sua, hs.Ten_hang_sua, ls.Ten_loai, Trong_luong, Don_gia 
 				FROM sua AS s JOIN hang_sua AS hs ON s.Ma_hang_sua = hs.Ma_hang_sua 
 								JOIN loai_sua AS ls ON s.Ma_loai_sua = ls.Ma_loai_sua
 				LIMIT '.$offset.','.$rowsPerPage;
@@ -30,26 +30,31 @@
     	{
     		if(mysqli_num_rows($result)>0)
     		{
-                    echo '<table border="1" width="70%" align="center">';
-                    
-                    while($row = mysqli_fetch_object($result))
-                    {
-                        echo '<tr>';
-                            echo '<td colspan="2" align="center" style="background-color: #2d9498;">'.$row->Ten_sua.'-'.$row->Ten_hang_sua.'</td>';
-                        echo '</tr>';
-
-                        echo '<tr>';
-                            echo '<td align="center" width="200px"> <img src="Hinh_sua/'.$row->Hinh.'" width="100px" height="100px"></td>';
-                        
-                            echo '<td>';                  
-                                echo '<b> Thành phần dinh dưỡng: </b></br>'.$row->TP_Dinh_Duong.'</br>';
-                                echo '<b>Lợi ích:</b> </br>'.$row->Loi_ich.'</br>';
-                                echo '<b>Trọng lượng: </b>'.$row->Trong_luong.' gr - <b>Đơn giá:</b> '.$row->Don_gia.' VNĐ';
-                            echo '</td>';
-
-                        echo '</tr>';                        
-                    }
-                    echo '</table>';
+    			$dem = 0;
+        		while ($row = mysqli_fetch_object($result))
+        		{
+					$dem++;   
+        			if($dem % 2 == 0) //Tô màu hàng chẵn, lẻ.
+        			{
+        				$str = 'style= "background-color: lightblue;"';
+        			}
+        			else
+        			{
+        				$str = 'style= "background-color: lightpink;"';
+        			}
+        			echo '<tr '.$str.'>';
+        			echo '<td align="center">'.$dem.'</td>';
+        			foreach ($row as $key => $value) 
+        			{
+						if($key == "Trong_luong")
+							echo '<td align="center">'.$value.' gram </td>';
+						else if($key == "Don_gia")
+							echo '<td align="center">'.$value.' VNĐ</td>';
+						else
+        					echo '<td align="center">'.$value.'</td>';
+        			}
+        			echo '</tr>';
+        		}
     		}
     	}
         $res = mysqli_query($conn, "SELECT * FROM sua");
@@ -61,7 +66,17 @@
 
 	?>
 	<h3 align="center">THÔNG TIN SỮA</h3>
-    <?php printDS($result) ?>  
+	<table border="1" align="center">
+			<tr>
+				<th>STT</th>
+				<th>Tên sữa</th>
+				<th>Hãng sữa</th>
+				<th>Loại sữa</th>
+				<th>Trọng lượng</th>
+				<th>Đơn giá</th>
+			</tr>
+			<?php printDS($result); ?>
+	</table>
     <p align="center"><?php
     //Về đầu
     echo "<a href=".$_SERVER['PHP_SELF']."?page=1>First Page &nbsp; </a>";

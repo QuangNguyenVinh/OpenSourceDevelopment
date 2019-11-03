@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 	 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>QLBS</title>
+	<title>Lưới tùy biến</title>
 </head>
 <body>
 	<?php
